@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.solvd.eduncan</groupId>
+  <artifactId>SolvdProject</artifactId>
+  <versioning>
+    <lastUpdated>20240906064542</lastUpdated>
+    <snapshot>
+      <timestamp>20240906.064542</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.0-20240906.064542-1</value>
+        <updated>20240906064542</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>1.0-20240906.064542-1</value>
+        <updated>20240906064542</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>1.0-SNAPSHOT</version>
+</metadata>
