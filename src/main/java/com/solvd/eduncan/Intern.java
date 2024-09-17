@@ -6,11 +6,12 @@ import java.util.List;
 public final class Intern extends Employee implements Skillable, Billable {
     private String schoolName;
     private String major;
-    private List<String> skills = new ArrayList<String>();
+    private final List<String> skills = new ArrayList<String>();
     private String currentTask;
 
-    public Intern(String employeeId, String name, Department department, String schoolName, String major) {
-        super(employeeId, name, "Intern", department);
+    public Intern(String name, Department department,
+                  String schoolName, String major, double baseSalary) {
+        super(name, EmployeeLevel.INTERN, department, baseSalary);
         this.schoolName = schoolName;
         this.major = major;
     }

@@ -5,8 +5,10 @@ import java.util.List;
 public final class FrontendDeveloper extends Developer {
     private String[] frontendFrameworks;
 
-    public FrontendDeveloper(String employeeId, String name, Department department, List<String> programmingLanguages, String[] frontendFrameworks) {
-        super(employeeId, name, department, programmingLanguages);
+    public FrontendDeveloper(String name, Department department,
+                             EmployeeLevel employeeLevel, List<String> programmingLanguages,
+                             String[] frontendFrameworks, double baseSalary) {
+        super(name, employeeLevel, department, programmingLanguages, baseSalary);
         this.frontendFrameworks = frontendFrameworks;
     }
 

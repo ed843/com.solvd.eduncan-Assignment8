@@ -8,9 +8,19 @@ public final class Tester extends Employee implements Skillable, Billable {
     private final List<String> skills = new ArrayList<String>();
     private String currentTask = "";
 
-    public Tester(String employeeId, String name, Department department, String testingTools) {
-        super(employeeId, name, "Tester", department);
+    public Tester(String name, EmployeeLevel employeeLevel,
+                  Department department, String testingTools, double baseSalary) {
+        super(name, employeeLevel, department, baseSalary);
+        if (employeeLevel.getLevel() < 6) {
+            throw new IllegalArgumentException(
+                    "Error: Invalid EmployeeLevel for Tester. Must be JUNIOR_TESTER or higher (level 6+)." +
+                            " Provided level: " + employeeLevel.getLevel());
+        }
         this.testingTools = testingTools;
+    }
+
+    public String getTestingTools() {
+        return testingTools;
     }
 
     public void performDuties() {

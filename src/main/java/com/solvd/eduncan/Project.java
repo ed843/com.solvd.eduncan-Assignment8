@@ -14,6 +14,7 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
     private static String auditLog;
     private String currentTask;
     private CustomLinkedList<String> taskList;
+    private ProjectStatus status;
 
     public Project(String projectId, String projectName, double budget) {
         this.projectId = projectId;
@@ -21,6 +22,7 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
         if (budget < 0) throw new NegativeBudgetException("Budget cannot be negative");
         this.budget = budget;
         this.taskList = new CustomLinkedList<>();
+        status = ProjectStatus.PLANNING;
     }
 
     @Override
@@ -108,7 +110,7 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
 
     @Override
     public String getStatus() {
-        if (currentTask.isEmpty()) {
+        if (currentTask == null || currentTask.isEmpty()) {
             return "Currently free";
         } else {
             return "Working on " + currentTask + ".";
@@ -144,6 +146,14 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
 
     public int getTaskCount() {
         return taskList.size();
+    }
+
+    public void changeStatus(ProjectStatus newStatus) {
+        this.status = newStatus;
+    }
+
+    public boolean isActive() {
+        return status.isActive();
     }
 }
 

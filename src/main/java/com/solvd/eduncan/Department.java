@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Department extends Company implements Manageable {
-    private final String departmentName;
+    private final DepartmentType departmentType;
     private static int totalDepartments;
     private static final int MAX_DEPARTMENTS = 10;
     private String currentTask;
@@ -15,10 +15,10 @@ public class Department extends Company implements Manageable {
         System.out.println("Department tracking initialized");
     }
 
-    public Department(String name, String location, String departmentName) {
+    public Department(String name, String location, DepartmentType departmentType) {
         super(name, location);
         if (totalDepartments < MAX_DEPARTMENTS) {
-            this.departmentName = departmentName;
+            this.departmentType = departmentType;
             totalDepartments++;
         } else {
             throw new DepartmentLimitExceededException("Maximum number of departments reached.");
@@ -26,25 +26,25 @@ public class Department extends Company implements Manageable {
         this.employees = new HashSet<Employee>();
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public DepartmentType getDepartmentType() {
+        return departmentType;
     }
 
     @Override
     public String toString() {
-        return super.toString() + "\nDepartment: " + departmentName;
+        return super.toString() + "\nDepartment: " + departmentType;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode() + departmentName.hashCode();
+        return super.hashCode() + departmentType.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (!super.equals(obj)) return false;
         Department department = (Department) obj;
-        return departmentName.equals(department.getDepartmentName());
+        return departmentType.equals(department.getDepartmentType());
     }
 
     @Override

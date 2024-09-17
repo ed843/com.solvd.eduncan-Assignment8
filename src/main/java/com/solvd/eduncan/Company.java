@@ -1,17 +1,26 @@
 package com.solvd.eduncan;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 
 public class Company implements Auditable {
+    private static String auditLog;
     private final String name;
     private final String location;
-    private static String auditLog;
     private List<Department> departments;
+    private List<Employee> employees;
+
     public Company(String name, String location) {
         this.name = name;
         this.location = location;
         this.departments = new ArrayList<Department>();
+        this.employees = new ArrayList<>();
     }
 
     public String getName() {
@@ -67,6 +76,34 @@ public class Company implements Auditable {
 
     public List<Department> getDepartments() {
         return new ArrayList<>(departments);
+    }
+
+    public void printEmployeeDetails() {
+        Consumer<Employee> printEmployeeDetails = e -> System.out.println(e.getName() + " - " + e.getEmployeeLevel().getTitle());
+        employees.forEach(printEmployeeDetails);
+    }
+
+    public List<Employee> getHighPaidEmployeeList() {
+        Utils.Filter<Employee> highPaidEmployees = e -> e.getBaseSalary() > 100000;
+        return Utils.filterList(employees, highPaidEmployees);
+    }
+
+    public void sortEmployeesByPay() {
+        Utils.Comparator<Employee> byPay = (e1, e2) -> Double.compare(e1.getBaseSalary(), e2.getBaseSalary());
+        Utils.sortList(employees, byPay);
+    }
+
+    public double calculateBonus() {
+        if (employees.isEmpty()) {
+            return 0;
+        }
+        Function<Employee, Double> calculateBonus = Employee::calculateBonus;
+        return employees.stream().mapToDouble(e -> calculateBonus.apply(e)).sum();
+    }
+
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
     }
 }
 

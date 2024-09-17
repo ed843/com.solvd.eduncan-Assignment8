@@ -8,8 +8,9 @@ public final class Manager extends Employee implements Reportable{
     private String currentTask;
     private PriorityQueue<String> taskPriority;
 
-    public Manager(String employeeId, String name, Department department, String availability) {
-        super(employeeId, name, "Manager", department);
+    public Manager(String name, Department department,
+                   String availability, double baseSalary) {
+        super(name, EmployeeLevel.MANAGER, department, baseSalary);
         this.availability = availability;
         this.taskPriority = new PriorityQueue<>();
     }

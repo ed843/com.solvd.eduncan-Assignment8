@@ -7,10 +7,13 @@ import java.util.List;
 public class Developer extends Employee implements Skillable, Billable {
     private final List<String> skills;
     private String currentTask = "";
+    private List<TechnologyStack> techStack;
 
-    public Developer(String employeeId, String name, Department department, List<String> programmingLanguages) {
-        super(employeeId, name, "Developer", department);
+    public Developer(String name, EmployeeLevel employeeLevel,
+                     Department department, List<String> programmingLanguages, double baseSalary) {
+        super(name, employeeLevel, department, baseSalary);
         this.skills = programmingLanguages;
+        this.techStack = new ArrayList<>();
     }
 
     @Override
@@ -65,7 +68,7 @@ public class Developer extends Employee implements Skillable, Billable {
 
     @Override
     public boolean hasSkill(String skill) throws SkillNotFoundException {
-       return skills.contains(skill);
+        return skills.contains(skill);
     }
 
     @Override
@@ -100,5 +103,13 @@ public class Developer extends Employee implements Skillable, Billable {
     @Override
     public double getTotalCost() {
         return 40 * 35;
+    }
+
+    public void addTechnology(TechnologyStack tech) {
+        techStack.add(tech);
+    }
+
+    public List<TechnologyStack> getTechStack() {
+        return new ArrayList<>(techStack);
     }
 }
