@@ -11,7 +11,7 @@ public final class Intern extends Employee implements Skillable, Billable {
 
     public Intern(String name, Department department,
                   String schoolName, String major, double baseSalary) {
-        super(name, EmployeeLevel.INTERN, department, baseSalary);
+        super(name, EmployeeLevel.INTERN, department, baseSalary, 0);
         this.schoolName = schoolName;
         this.major = major;
     }

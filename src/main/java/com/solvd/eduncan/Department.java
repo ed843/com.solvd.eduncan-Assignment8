@@ -70,7 +70,8 @@ public class Department extends Company implements Manageable {
         employees.add(employee);
     }
 
-    public Set<Employee> getEmployees() {
+
+    public Set<Employee> getDepEmployees() {
         return new HashSet<>(employees);
     }
 }

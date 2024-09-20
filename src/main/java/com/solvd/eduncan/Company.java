@@ -1,9 +1,7 @@
 package com.solvd.eduncan;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.*;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -21,6 +19,63 @@ public class Company implements Auditable {
         this.location = location;
         this.departments = new ArrayList<Department>();
         this.employees = new ArrayList<>();
+    }
+
+    public static void reflectionDemo() {
+        try {
+            // Get the Class object for Company
+            Class<?> companyClass = Company.class;
+
+            System.out.println("Class name: " + companyClass.getName());
+
+            // Extract information about fields
+            System.out.println("\nFields:");
+            Field[] fields = companyClass.getDeclaredFields();
+            for (Field field : fields) {
+                System.out.println("Name: " + field.getName());
+                System.out.println("Type: " + field.getType().getSimpleName());
+                System.out.println("Modifiers: " + Modifier.toString(field.getModifiers()));
+                System.out.println();
+            }
+
+            // Extract information about constructors
+            System.out.println("Constructors:");
+            Constructor<?>[] constructors = companyClass.getDeclaredConstructors();
+            for (Constructor<?> constructor : constructors) {
+                System.out.println("Name: " + constructor.getName());
+                System.out.println("Parameter types: " + Arrays.toString(constructor.getParameterTypes()));
+                System.out.println("Modifiers: " + Modifier.toString(constructor.getModifiers()));
+                System.out.println();
+            }
+
+            // Extract information about methods
+            System.out.println("Methods:");
+            Method[] methods = companyClass.getDeclaredMethods();
+            for (Method method : methods) {
+                System.out.println("Name: " + method.getName());
+                System.out.println("Return type: " + method.getReturnType().getSimpleName());
+                System.out.println("Parameter types: " + Arrays.toString(method.getParameterTypes()));
+                System.out.println("Modifiers: " + Modifier.toString(method.getModifiers()));
+                System.out.println();
+            }
+
+            // Create object using reflection
+            Constructor<?> constructor = companyClass.getConstructor(String.class, String.class);
+            Object companyObject = constructor.newInstance("ReflectionCorp", "Reflection City");
+
+            // Call method using reflection
+            Method addDepartmentMethod = companyClass.getMethod("addDepartment", Department.class);
+            Department itDepartment = new Department("IT", "Tech Building", DepartmentType.IT);
+            addDepartmentMethod.invoke(companyObject, itDepartment);
+
+            // Verify the method call
+            Method getDepartmentsMethod = companyClass.getMethod("getDepartments");
+            List<Department> departments = (List<Department>) getDepartmentsMethod.invoke(companyObject);
+            System.out.println("Departments after reflection call: " + departments);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getName() {
@@ -92,6 +147,15 @@ public class Company implements Auditable {
         Utils.Comparator<Employee> byPay = (e1, e2) -> Double.compare(e1.getBaseSalary(), e2.getBaseSalary());
         Utils.sortList(employees, byPay);
     }
+
+    public int getEmployeeCount() {
+        return employees.size();
+    }
+
+    public List<Employee> getEmployees() {
+        return new ArrayList<>(employees);
+    }
+
 
     public double calculateBonus() {
         if (employees.isEmpty()) {

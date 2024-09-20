@@ -13,7 +13,8 @@ public class Main {
         techCompany.addDepartment(department1);
         techCompany.addDepartment(department2);
 
-        Developer developer = new Developer("John Doe", EmployeeLevel.SENIOR, department1, new ArrayList<>(), 75000);
+        Developer developer = new Developer("John Doe", EmployeeLevel.SENIOR, department1, new ArrayList<>(), 75000, 5);
+        techCompany.addEmployee(developer);
         developer.addTechnology(TechnologyStack.JAVA);
         developer.addTechnology(TechnologyStack.PYTHON);
         developer.addBenefit(CompanyBenefit.HEALTH_INSURANCE);
@@ -27,9 +28,14 @@ public class Main {
         System.out.println("Employee Level: " + developer.getEmployeeLevel().getTitle());
         System.out.println("Employee Bonus: $" + formatter.format(developer.calculateBonus()));
         System.out.println("Employee Tech Stack: " + developer.getTechStack());
+        techCompany.sortEmployeesByPay();
+        System.out.println(techCompany.getEmployees());
         System.out.println("Employee Benefits Cost: $" + formatter.format(developer.calculateTotalBenefitsCost()));
         System.out.println("Project Status: " + webProject.getStatus());
         System.out.println("Project Active: " + webProject.isActive());
         System.out.println("Company Departments: " + techCompany.getDepartments());
+
+        // testing reflection
+        Company.reflectionDemo();
     }
 }

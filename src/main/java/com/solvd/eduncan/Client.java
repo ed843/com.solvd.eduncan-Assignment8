@@ -1,7 +1,9 @@
 package com.solvd.eduncan;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public final class Client {
     private final String clientId;
@@ -69,5 +71,12 @@ public final class Client {
     public String toString() {
         return clientId + " " + name + " " + industry + "\n" + Arrays.toString(currentClientProjects) + "\n" + Arrays.toString(pastClientProjects) ;
     }
+
+    public List<Project> getActiveProjects() {
+        return Arrays.stream(currentClientProjects)
+                .filter(Project::isActive)
+                .collect(Collectors.toList());
+    }
+
 
 }

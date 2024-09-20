@@ -3,15 +3,19 @@ package com.solvd.eduncan;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Developer extends Employee implements Skillable, Billable {
     private final List<String> skills;
     private String currentTask = "";
     private List<TechnologyStack> techStack;
 
+
     public Developer(String name, EmployeeLevel employeeLevel,
-                     Department department, List<String> programmingLanguages, double baseSalary) {
-        super(name, employeeLevel, department, baseSalary);
+                     Department department, List<String> programmingLanguages, double baseSalary, int yearsOfExperience) {
+        super(name, employeeLevel, department, baseSalary, yearsOfExperience);
         this.skills = programmingLanguages;
         this.techStack = new ArrayList<>();
     }
@@ -107,6 +111,24 @@ public class Developer extends Employee implements Skillable, Billable {
 
     public void addTechnology(TechnologyStack tech) {
         techStack.add(tech);
+    }
+
+    public static List<String> getCommonSkills(List<Developer> developers) {
+
+        return developers.stream()
+                // Flatten the stream of skill arrays into a stream of individual skills
+                .flatMap(d -> Arrays.stream(d.getSkills()))
+                // Group skills by their name, counting occurrences
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                // Convert the resulting map back to a stream of map entries
+                .entrySet().stream()
+                // Keep only skills that appear as many times as there are developers
+                // (meaning all developers have this skill)
+                .filter(entry -> entry.getValue() == developers.size())
+                // Extract just the skill name from each remaining entry
+                .map(Map.Entry::getKey)
+                // Collect the common skill names into a list
+                .collect(Collectors.toList());
     }
 
     public List<TechnologyStack> getTechStack() {

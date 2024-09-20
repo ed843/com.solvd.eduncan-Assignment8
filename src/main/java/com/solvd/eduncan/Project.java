@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class Project implements Manageable, Auditable, Reportable, Billable {
@@ -15,6 +16,7 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
     private String currentTask;
     private CustomLinkedList<String> taskList;
     private ProjectStatus status;
+    List<Employee> team;
 
     public Project(String projectId, String projectName, double budget) {
         this.projectId = projectId;
@@ -22,6 +24,7 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
         if (budget < 0) throw new NegativeBudgetException("Budget cannot be negative");
         this.budget = budget;
         this.taskList = new CustomLinkedList<>();
+
         status = ProjectStatus.PLANNING;
     }
 
@@ -148,12 +151,27 @@ public class Project implements Manageable, Auditable, Reportable, Billable {
         return taskList.size();
     }
 
+    public List<Employee> getTeam() {
+        return team;
+    }
+
+    public void setTeam(List<Employee> team) {
+        this.team = team;
+    }
+
     public void changeStatus(ProjectStatus newStatus) {
         this.status = newStatus;
     }
 
     public boolean isActive() {
         return status.isActive();
+    }
+
+    public void assignRandomEmployee(List<Employee> availableEmployees) {
+        availableEmployees.stream().findAny().ifPresent(e -> {
+            team.add(e);
+            System.out.println("Assigned: " + e.getName());
+        });
     }
 }
 

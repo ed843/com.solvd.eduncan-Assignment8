@@ -7,8 +7,8 @@ public final class FrontendDeveloper extends Developer {
 
     public FrontendDeveloper(String name, Department department,
                              EmployeeLevel employeeLevel, List<String> programmingLanguages,
-                             String[] frontendFrameworks, double baseSalary) {
-        super(name, employeeLevel, department, programmingLanguages, baseSalary);
+                             String[] frontendFrameworks, double baseSalary, int yearsOfExperience) {
+        super(name, employeeLevel, department, programmingLanguages, baseSalary, yearsOfExperience);
         this.frontendFrameworks = frontendFrameworks;
     }
 
